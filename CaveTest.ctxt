@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=
+comment0.target=CaveTest()
+comment0.text=\r\n\ Default\ constructor\ for\ test\ class\ CaveTest\r\n
+comment1.params=
+comment1.target=void\ PrintCave_CaverAtX1Y2N()
+comment1.text=\r\n\ Print\ Grid\ Check\:\ Caver\ is\ at\ X1\ Y2\ facing\ N\ on\ grid\ and\ is\ alive.\ '^'\ symbol\ should\ appear.\r\n
+comment2.params=
+comment2.target=void\ PrintCave_CaverAtX6Y10E()
+comment2.text=\r\n\ Print\ Grid\ Check\:\ Caver\ is\ at\ X6\ Y1\ facing\ E\ on\ grid\ and\ is\ alive.\ '>'\ symbol\ should\ appear.\r\n
+comment3.params=
+comment3.target=void\ PrintCave_CaverAtX0Y0S()
+comment3.text=\r\n\ Print\ Grid\ Check\:\ Caver\ is\ at\ X0\ Y0\ facing\ S\ on\ grid\ and\ is\ alive.\ 'V'\ symbol\ should\ appear.\r\n
+comment4.params=
+comment4.target=void\ PrintCaver_CaverAtX15Y19W()
+comment4.text=\r\n\ Print\ Grid\ Check\:\ Caver\ is\ at\ X15\ Y19\ facing\ W\ on\ grid\ and\ is\ alive.\ '<'\ symbol\ should\ appear.\r\n
+comment5.params=
+comment5.target=void\ PrintCave_CaverDeathAtX0Y0S()
+comment5.text=\r\n\ Print\ Grid\ Check\:\ Caver\ is\ at\ X0\ Y0\ facing\ S\ on\ grid\ and\ is\ dead.\ 'X'\ symbol\ should\ appear.\r\n
+numComments=6

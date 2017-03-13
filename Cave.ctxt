@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=x\ y\ dir\ caverDeath
+comment0.target=void\ printCave(int,\ int,\ java.lang.String,\ boolean)
+comment0.text=\r\n\ printCave\ will\ reprint\ the\ 'cave'\ array\ with\ the\ (x,y)\ coordinates\ and\ direction\ of\ the\ caver,\ \r\n\ \ also\ passing\ a\ boolean\ on\ whether\ the\ caver\ is\ dead\ or\ not.\r\n\ \r\n\ @param\ \ \ \ \ \ INT\ x,\ current\ x\ coordinate\ of\ caver\r\n\ @param\ \ \ \ \ \ INT\ y,\ current\ y\ coordinate\ of\ caver\r\n\ @param\ \ \ \ \ \ BOOLEAN\ caverDeath,\ current\ state\ of\ the\ caver\ T\=Dead\ F\=Alive\r\n
+comment1.params=row
+comment1.target=void\ printRow(java.lang.String[])
+comment1.text=\r\n\ printRow\ -\ For\ every\ row\ passed\ in\ from\ the\ cave\ grid\ array,\ print\ the\ row\ and\ a\ space.\r\n\ \r\n\ @param\ \ \ \ \ \ STRING[]\ row,\ the\ string\ of\ a\ row\ in\ the\ grid.\r\n
+numComments=2

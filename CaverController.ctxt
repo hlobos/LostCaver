@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ play()
+comment0.text=\r\n\ 1.\ Shows\ the\ game\ story\ for\ the\ user\ as\ to\ the\ purpose\ of\ the\ game.\r\n\ 2.\ User\ is\ then\ asked\ the\ the\ (x,y)\ on\ where\ the\ caver\ is\ located\ on\ the\ grid\ of\ the\ 'gps'\r\n\ 3.\ Game\ loop,\ prints\ the\ title,\ cave\ array\ and\ the\ move\ options\ for\ the\ user.\ The\ user\ will\r\n\ \ make\ a\ play\ choice\ executed\ by\ moveSet().\r\n\ 4.\ moveSet()\ checks\ for\ the\ state\ of\ the\ game,\ if\ the\ game\ ends\ via\ the\ user\ or\ the\ caver\ has\ died,\ \r\n\ \ then\ the\ appropriate\ end\ message\ is\ displayed.\r\n
+comment1.params=
+comment1.target=void\ gameStory()
+comment1.text=\r\n\ Displays\ the\ story\ and\ purpose\ of\ the\ game,\ asks\ the\ user\ to\ press\ ENTER\ to\ begin\ the\ game.\r\n
+comment2.params=
+comment2.target=boolean\ moveSet()
+comment2.text=\r\n\ moveSet()\ will\ display\ the\ current\ information\ of\ the\ caver\ via\ 'caverGPS()'.\ Caver\ info\:\ (x,y)\ coordinates,\ \r\n\ \ facing\ direction,\ current\ path\ of\ caver\ movement\ so\ far\ and\ the\ player\ move\ options.\ \r\n\ \ It\ will\ then\ ask\ the\ player\ to\ make\ a\ choice\ via\ the\ menu\ options\:\r\n\ \ \ \ \ \ M\ -\ Forward\r\n\ \ \ \ \ \ R\ -\ Move\ 90\ degrees\ to\ the\ RIGHT\r\n\ \ \ \ \ \ L\ -\ Move\ 90\ degrees\ to\ the\ LEFT\r\n\ \ \ \ \ \ E\ -\ EXIT\ Game\r\n\ \ moveSet()\ loop\ will\ continually\ check\ for\ valid\ data\ and\ whether\ or\ not\ a\ forward\ movement\ kills\ the\ caver,\r\n\ \ boolean\ 'caverDeath'.\r\n\ \ \r\n\ \ @return\ \ \ \ \ BOOLEAN\ gameEnd,\ F\=Caver\ has\ died\ or\ the\ user\ has\ chosen\ to\ end\ the\ game.\ \r\n
+comment3.params=
+comment3.target=void\ caverGps()
+comment3.text=\r\n\ Displays\ a\ caver's\ information\ ((x,y)\ coordinates,\ current\ facing\ direction,\ current\ path\ of\ caver\ movement\ so\ far)\r\n\ and\ player\ menu\ options\:\r\n\ \ \ \ \ \ M\ -\ Forward\r\n\ \ \ \ \ \ R\ -\ Move\ 90\ degrees\ to\ the\ RIGHT\r\n\ \ \ \ \ \ L\ -\ Move\ 90\ degrees\ to\ the\ LEFT\r\n\ \ \ \ \ \ E\ -\ EXIT\ Game\r\n
+comment4.params=
+comment4.target=void\ caverSetup()
+comment4.text=\r\n\ This\ is\ where\ the\ user\ is\ asked\ for\ the\ caver's\ inital\ coordinates/direction\ to\ set\ the\ game.\r\n\ It\ requests\ the\ X,\ the\ Y\ and\ what\ direction\ the\ caver\ is\ facing.\ North\ \=\ 'N',\ etc.\r\n\ It\ also\ does\ checks\ for\ valid\ data\ to\ be\ inputed.\r\n\ Once\ all\ requested\ data\ is\ set,\ the\ caver,\ named\ 'Aeo'\ is\ created\ and\ its\ initial\ stats\ are\ updated.\r\n
+comment5.params=
+comment5.target=void\ clearScreen()
+comment5.text=\r\n\ Clears\ the\ console\ screen\ in\ a\ blueJ\ terminal.\r\n
+numComments=6

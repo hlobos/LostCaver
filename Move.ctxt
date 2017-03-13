@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=caver
+comment0.target=Move(Caver)
+comment0.text=\r\n\ Constructor\r\n\ \r\n\ @param\ \ \ \ \ \ CAVER\ caver,\ Existing\ Caver\ object\ to\ change\ coordinates\ or\ facing\ direction.\r\n
+comment1.params=x\ y\ dir
+comment1.target=boolean\ forward(int,\ int,\ java.lang.String)
+comment1.text=\r\n\ 'Forward'\ move\ set\ option\ of\ the\ game.\ Depending\ on\ the\ direction\ N/E/S/W\ of\ the\ caver\ and\ on\ the\r\n\ \ (x,\ y)\ coordinates,\ moving\ forward\ might\ cause\ an\ out\ of\ bounds\ (go\ outside\ the\ border\ of\ the\ array)\r\n\ \ the\ caver\ will\ then\ meet\ instant\ death.\ The\ 'death'\ boolean\ will\ return\ true.\r\n\ \r\n\ @return\ \ \ \ \ \ BOOLEAN\ death,\ T\=Forward\ value\ will\ cause\ an\ out\ of\ bounds\ of\ the\ array,\ caver\ dies\ F\=Caver\ lives\r\n\ @param\ \ \ \ \ \ \ INT\ x,\ x\ coordinate\ of\ current\ position\ of\ the\ caver\r\n\ @param\ \ \ \ \ \ \ INT\ y,\ y\ coordinate\ of\ current\ position\ of\ the\ caver\r\n\ @param\ \ \ \ \ \ \ STRING\ dir,\ facing\ direction\ of\ current\ position\ of\ the\ caver\ ex\ N/E/S/W\r\n
+comment2.params=dir
+comment2.target=void\ right(java.lang.String)
+comment2.text=\r\n\ 'Right'\ move\ set\ option\ of\ the\ game.\ Depending\ on\ the\ direction\ N/E/S/W\ of\ the\ caver,\ \r\n\ \ they\ will\ move\ clockwise,\ their\ new\ direction\ will\ be\ adjusted.\r\n\ \r\n\ @param\ \ \ \ \ \ \ STRING\ dir,\ facing\ direction\ of\ current\ position\ of\ the\ caver\ ex\ N/E/S/W\r\n
+comment3.params=dir
+comment3.target=void\ left(java.lang.String)
+comment3.text=\r\n\ 'Left'\ move\ set\ option\ of\ the\ game.\ Depending\ on\ the\ direction\ N/E/S/W\ of\ the\ caver,\ \r\n\ \ they\ will\ move\ counter\ clockwise,\ their\ new\ direction\ will\ be\ adjusted.\r\n\ \r\n\ @param\ \ \ \ \ \ \ STRING\ dir,\ facing\ direction\ of\ current\ position\ of\ the\ caver\ ex\ N/E/S/W\r\n
+numComments=4
