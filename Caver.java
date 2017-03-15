@@ -1,161 +1,85 @@
-/**
- * Caver.java - This class is simply keeping track of the current coordinates (x,y), 
- *  current facing direction and instruction the user has given to the caver (the path) 
- *  every time the caver has moved.
- * 
- * @Hazel Lobos
- * @March 22, 2015 Version 1.0
- */
-
-/*
- * Assumptions  : ---
- * Known Errors : ---
- */
 public class Caver
 {
-     //Methods for the Caver class (individual descriptions below).
-     
-    private String currPath = "";       //Current instructions the user has given to the caver, ex '(0,0) N RRLMMLMM'
-    private int currCX;                 //Current x coordinate of caver
-    private int currCY;                 //Current y coordinate of caver
-    private String currDirection = "";  //Current facing direction of caver, ex 'N'=north or 'E'=east or 'S'=south or 'W'=west, shorthanded in comments as N/E/S/W
-    private String currCoordinates = "";    //The current x and y coordinates of the caver, ex (0,1)
+    private String currentPath = "";                //Current instructions the user has given to the caver, ex '(0,0) N RRLMMLMM'
+    private int currentCaverXCoordinate;
+    private int currentCaverYCoordinate;
+    private String currentCaverDirection = "";      // ex 'N'=north or 'E'=east or 'S'=south or 'W'=west
+    private String currentCaverXYCoordinates = "";  // ex (0,1)
     
-    private int initialCX;              //Initial x coordinate of caver specified by user at first move of the game
-    private int initialCY;              //Initial y coordinate of caver specified by user at first move of the game
-    private String initialD = "";       //Initial facing direction of caver specified by user at first move of the game
+    private int initialCaverXCoordinate;
+    private int initialCaverYCoordinate;
+    private String initialCaverDirection = "";
     
-    /**
-     * Constructor - Takes in the initial coordinates and facing position gathered from the user at the start of the game.
-     * 
-     * @param      INT initialCX, Initial x coordinate of caver
-     * @param      INT initialCY, Initial y coordinate of caver
-     * @param      STRING initial, Initial facing direction of caver
-     */
-    public Caver(int initialCX, int initialCY, String initialD)
+    public Caver(int initialCaverXCoordinate, int initialCaverYCoordinate, String initialCaverDirection)
     {
-        this.initialCX = initialCX;
-        this.initialCY = initialCY;
-        this.initialD = initialD;
-        initialPath();
-        initialCoordinates();
+        this.initialCaverXCoordinate = initialCaverXCoordinate;
+        this.initialCaverYCoordinate = initialCaverYCoordinate;
+        this.initialCaverDirection = initialCaverDirection;
+        
+        setupCaversInitialPathString();
+        setupCaversInitialCoordinates();
     }
     
-    /**
-     * Sets up the string form of the initial path, ex '(0,1) N ' and updates the current path string.
-     */
-    private void initialPath()
+    private void setupCaversInitialPathString()
     {
-        String initialPath;
-        initialPath = "(" +initialCX+ "," +initialCY+ ") " + initialD + " ";
-        setCurrPath(initialPath);
+        String initialPath = "(Row: " +initialCaverXCoordinate+ ", Column: " +initialCaverYCoordinate+ ") " + initialCaverDirection + " ";
+        setCurrentPath(initialPath);
     }
     
-    /**
-     * Sets up the initial coordinates of the caver to the current coordinates.
-     */
-    private void initialCoordinates()
+    private void setupCaversInitialCoordinates()
     {
-        currCX = initialCX;
-        currCY = initialCY;
-        setCurrCoordinates();
+        currentCaverXCoordinate = initialCaverXCoordinate;
+        currentCaverYCoordinate = initialCaverYCoordinate;
+        setCurrentCaverXYCoordinates();
     }
     
-    /**
-     * Setter - Updates the string form of the current coordinates, ex '(1,0)'
-     */
-    public void setCurrCoordinates()
+    public void setCurrentCaverXYCoordinates()
     {
-        currCoordinates = "(" +currCX+ "," +currCY+ ")";
+        currentCaverXYCoordinates = "(Row: " +currentCaverXCoordinate+ ", Column: " +currentCaverYCoordinate+ ")";
     }
     
-    /**
-     * Getter - returns the current coordinate string, ex '(1,0)'
-     * 
-     * @return     STRING currCoordinates, see above.
-     */
-    public String getCurrCoordinates()
+    public String getCurrentCaverXYCoordinates()
     {
-        return currCoordinates;
+        return currentCaverXYCoordinates;
     }
     
-    /**
-     * Setter - Updates the caver's current path string, adding a new movement specific by the user, ex 'M'
-     * 
-     * @param     STRING newMove, new user move 'M' or 'R' or 'L'
-     */
-    public void setCurrPath(String newMove)
+    public void setCurrentPath(String newMove)
     {
-        this.currPath = this.currPath + newMove;
+        this.currentPath = this.currentPath + newMove;
     }  
     
-    /**
-     * Getter - returns the current path string which is the movement commands the caver has moved.
-     * 
-     * @return     STRING currPath, see above.
-     */
-    public String getCurrPath()
+    public String getCurrentPath()
     {
-        return currPath;
+        return currentPath;
     }
     
-    /**
-     * Getter - returns the current facing direction of the caver, ex N/E/S/W
-     * 
-     * @return     STRING currDirection, see above.
-     */
-    public String getCurrDirection()
+    public String getCurrentCaverDirection()
     {
-        return currDirection;
+        return currentCaverDirection;
     }
     
-    /**
-     * Setter - Updates the current facing direction of the caver, passed in.
-     * 
-     * @param     STRING currDirection, current direction of the caver, ex N/E/S/W
-     */
-    public void setCurrDirection(String currDirection)
+    public void setCurrentCaverDirection(String currentCaverDirection)
     {
-        this.currDirection = currDirection;
+        this.currentCaverDirection = currentCaverDirection;
     }
     
-    /**
-     * Getter - returns the current x coordinate of caver.
-     * 
-     * @return     INT currCX, see above.
-     */
-    public int getCurrCX()
+    public int getCurrentCaverXCoordinate()
     {
-        return currCX;
+        return currentCaverXCoordinate;
     }
     
-    /**
-     * Setter - Updates the current x coordinate of caver.
-     * 
-     * @param     INT currCX, see above.
-     */
-    public void setCurrCX(int currCX)
+    public void setCurrentCaverXCoordinate(int currentCaverXCoordinate)
     {
-        this.currCX = currCX;
+        this.currentCaverXCoordinate = currentCaverXCoordinate;
     }
  
-    /**
-     * Getter - returns the current y coordinate of caver.
-     * 
-     * @return     INT currCY, see above. 
-     */
-    public int getCurrCY()
+    public int getCurrentCaverYCoordinate()
     {
-        return currCY;
+        return currentCaverYCoordinate;
     }
     
-    /**
-     * Setter - Updates the current y coordinate of caver.
-     * 
-     * @param     INT currCY, see above.
-     */
-    public void setCurrCY(int currCY)
+    public void setCurrentCaverYCoordinate(int currentCaverYCoordinate)
     {
-        this.currCY = currCY;
+        this.currentCaverYCoordinate = currentCaverYCoordinate;
     }
 }

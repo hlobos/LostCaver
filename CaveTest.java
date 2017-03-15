@@ -1,17 +1,8 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-/**
- * Test Class: CaveTest
- *
- * @author  Hazel Lobos
- * @version March 22, 2015.
- */
 public class CaveTest
 {
-    /**
-     * Default constructor for test class CaveTest
-     */
     public CaveTest()
     {
     }

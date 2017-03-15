@@ -1,65 +1,40 @@
-/**
- * Cave.java - Creates the cave grid array, automatically set to 20 wide (cols) 16 high (rows). 
- *  Each time cavePrint() is called, it will reprint the array with the coordinates and direction 
- *  of the caver, also passing a boolean on whether the caver is dead or not. 
- *  Death is caused by a forward movement that is outside the array walls of the grid.
- * 
- * @Hazel Lobos
- * @March 22, 2015 Version 1.0
- */
-
 import java.util.*;
 
-/*
- * Assumptions  : ---
- * Known Errors : ---
- */
 public class Cave
 {
-     //Methods for the Cave class (individual descriptions below).
+    private String cave[][] = new String[16][20];   //Cave grid: 16 high (rows), 20 wide (cols) 
     
-    private String cave[][] = new String[16][20];   //Cave grid 20 wide (cols) 16 high (rows)
-    
-    /**
-     * printCave will reprint the 'cave' array with the (x,y) coordinates and direction of the caver, 
-     *  also passing a boolean on whether the caver is dead or not.
-     * 
-     * @param      INT x, current x coordinate of caver
-     * @param      INT y, current y coordinate of caver
-     * @param      BOOLEAN caverDeath, current state of the caver T=Dead F=Alive
-     */
-    public void printCave(int x, int y, String dir, boolean caverDeath)
+    public void printCave(int x, int y, String direction, boolean hasCaverDied)
     {
         System.out.print("Welcome to: ESKAH CAVE\n\n");
         
-        //Note: The cave is filled out so that the origin (0,0) is at the bottom left when printed. 
-        //Will fill the grid with "_" strings, starting at row 15, col 0. Unless the caver is occupying that cave[row][col] 
+        // Cave origin (0,0) is at the bottom left when printed. 
+        // Will fill the grid with "_" strings, starting at row 15, col 0. Unless the caver is occupying that cave[row][col]
         for(int row = 15; row > -1; row--)
         {
             for(int col = 0; col < 20; col++)
             {  
                 if (row == x && col == y)
                 {
-                    //Check if caver died or update direction of caver
-                    if(caverDeath == true)
+                    if(hasCaverDied == true)
                     {
                         cave[row][col] = "X";
                     }
                     else
                     {
-                        if (dir.equals("N"))
+                        if (direction.equals("N"))
                         {
                             cave[row][col] = "^";
                         }
-                        else if (dir.equals("E"))
+                        else if (direction.equals("E"))
                         {
                             cave[row][col] = ">";
                         }
-                        else if (dir.equals("S"))
+                        else if (direction.equals("S"))
                         {
                             cave[row][col] = "V";
                         }
-                        else if (dir.equals("W"))
+                        else if (direction.equals("W"))
                         {
                             cave[row][col] = "<";
                         }
@@ -70,19 +45,14 @@ public class Cave
                     cave[row][col] = "_";
                 }
             }
-            printRow(cave[row]);
+            printSingleCaveRow(cave[row]);
         }
     }
     
-    /**
-     * printRow - For every row passed in from the cave grid array, print the row and a space.
-     * 
-     * @param      STRING[] row, the string of a row in the grid.
-     */
-    public void printRow(String[] row) 
+    public void printSingleCaveRow(String[] caveRow) 
     {
-        for (String i : row) {
-            System.out.print(i);
+        for (String cell : caveRow) {
+            System.out.print(cell);
             System.out.print(" ");
         }
         System.out.println();

@@ -1,62 +1,44 @@
-/**
- * CaveController.java - Controls the gameplay of the game using the other classes.
- * 
- * @Hazel Lobos
- * @March 22, 2015 Version 1.0
- */
-
 import java.util.*;
 import java.io.*;
 
 /*
  * Assumptions  : The user does not specify where the actual exit is, thus there is no 'Caver has escaped the cave' message.
- *  The user can only end the game manually by typing 'E' or the game ends when the caver dies.
- * Known Errors : 
+ *                The user can only end the game manually by typing 'E' or the game ends when the caver dies.
  */
 public class CaverController
 {
-     //Methods for the CaverController class (individual descriptions below).
-
-    private boolean gameState = true;   //If the game is still running = T, End game loop = F
-    boolean caverDeath = false;         //T=forward value will cause an out of bounds of the array, caver dies F=Caver lives
-    private char finalMoveUser;         //User movement choice converted into char.
-    private String expectedCharacters = "MRLE"; //Expected movement characters that user chooses as move options
-    private Move move;                  //Move class holds movement options for caver
-    private Cave cave = new Cave();     //Object to call print cave methods
-    private Caver aeo;                  //The caver, named 'Aeo', object hold methods to grab information of the spelunker
+    private boolean gameState = true;   
+    private boolean hasCaverDied = false;         
     
-    /**
-     * 1. Shows the game story for the user as to the purpose of the game.
-     * 2. User is then asked the the (x,y) on where the caver is located on the grid of the 'gps'
-     * 3. Game loop, prints the title, cave array and the move options for the user. The user will
-     *  make a play choice executed by moveSet().
-     * 4. moveSet() checks for the state of the game, if the game ends via the user or the caver has died, 
-     *  then the appropriate end message is displayed.
-     */
+    private char userMovementCharacter;
+    private String expectedUserMovementCharacters = "MRLE";
+    
+    private Move move;                  
+    private Cave cave = new Cave();     
+    private Caver aeo;                  
+    
     public void play() throws IOException
     {
-        gameStory();  //The game story is explained to the user
-        caverSetup(); //Asks the user the coordinates and direction of the caver
+        launchGameStoryText();
+        userSetupOfCaversInitialSpawnInCave();
         
-        //Execute game loop, see comments above #3
         while(gameState != false)
         {
             clearScreen();
             
             System.out.println("\t\t\t || ----- Lets Play: The Lost Caver ----- ||"); 
 
-            cave.printCave(aeo.getCurrCX(), aeo.getCurrCY(), aeo.getCurrDirection(), false); //Show user where Aeo is in Cave
+            cave.printCave(aeo.getCurrentCaverXCoordinate(), aeo.getCurrentCaverYCoordinate(), aeo.getCurrentCaverDirection(), false);
             
-            //Execute move functions, if user chooses to endgame 'gameState' will result in false, ending the loop and the game.
-            gameState = moveSet(); 
+            gameState = displayUserControlsAndCheckGameState(); 
         } 
         
-        if (caverDeath == true)
+        if (hasCaverDied == true)
         {
             clearScreen();
             System.out.println("\t\t\t || ----- Lets Play: The Lost Caver ----- ||"); 
-            cave.printCave(aeo.getCurrCX(), aeo.getCurrCY(), aeo.getCurrDirection(), true); //Show user where Aeo is in Cave
-            caverGps();   //Display coordinates, location, current path of the caver and player move options
+            cave.printCave(aeo.getCurrentCaverXCoordinate(), aeo.getCurrentCaverYCoordinate(), aeo.getCurrentCaverDirection(), true);
+            printUserOptionsMenuAndCaverCurrentLocation();
             System.out.println("\n\n || ----- Oh... It seems Aeo has met his demise. You tried valiantly. ----- ||"); 
         }
         else 
@@ -65,10 +47,7 @@ public class CaverController
         }
     }
     
-    /**
-     * Displays the story and purpose of the game, asks the user to press ENTER to begin the game.
-     */
-    private void gameStory() throws IOException
+    private void launchGameStoryText() throws IOException
     {
         System.out.println("\t\t\t || ----- The Story: The Lost Caver ----- ||"); 
         
@@ -84,151 +63,120 @@ public class CaverController
         clearScreen();
     }
    
-    /**
-     * moveSet() will display the current information of the caver via 'caverGPS()'. Caver info: (x,y) coordinates, 
-     *  facing direction, current path of caver movement so far and the player move options. 
-     *  It will then ask the player to make a choice via the menu options:
-     *      M - Forward
-     *      R - Move 90 degrees to the RIGHT
-     *      L - Move 90 degrees to the LEFT
-     *      E - EXIT Game
-     *  moveSet() loop will continually check for valid data and whether or not a forward movement kills the caver,
-     *  boolean 'caverDeath'.
-     *  
-     *  @return     BOOLEAN gameEnd, F=Caver has died or the user has chosen to end the game. 
-     */
-    private boolean moveSet()
+    private boolean displayUserControlsAndCheckGameState()
     {     
-        boolean moveLoop = true; //T=Stop asking for user moves. F=End of user turm
-        boolean gameEnd = true; //T=Keep going with game, user has played a valid move, F=Endgame
+        boolean canCaverMove = true;
+        boolean canGameContinue = true;
         move = new Move(aeo);
-        caverGps();   //Display coordinates, location, current path of the caver and player move options
         
-        //User chooses a moveset option:
-        while (moveLoop!=false)
+        printUserOptionsMenuAndCaverCurrentLocation();
+        
+        while (canCaverMove!=false)
         {
-            Scanner keyboard1 = new Scanner(System.in);
+            Scanner userKeyboardInputScanner = new Scanner(System.in);
             System.out.print("\n\nHow should Aeo Move?: ");
-            String moveUser = keyboard1.nextLine().trim();
-            moveUser = moveUser.toUpperCase();
+            String userMovementString = userKeyboardInputScanner.nextLine().trim();
+            userMovementString = userMovementString.toUpperCase();
                 
-            if(moveUser.length() > 0) /*User has to enter at least one character.*/
+            if(userMovementString.length() > 0)
             {
-                finalMoveUser = moveUser.charAt(0); //Takes the first element in the inputed string.
-                //check to see if choice is valid letter.
-                if(expectedCharacters.indexOf(finalMoveUser) >= 0)
+                userMovementCharacter = userMovementString.charAt(0);
+                
+                if(expectedUserMovementCharacters.indexOf(userMovementCharacter) >= 0)
                 {
-                    switch(finalMoveUser)
+                    switch(userMovementCharacter)
                     {
-                        case 'M': caverDeath = move.forward(aeo.getCurrCX(), aeo.getCurrCY(), aeo.getCurrDirection()); moveLoop = false;
+                        case 'M': hasCaverDied = move.forward(aeo.getCurrentCaverXCoordinate(), aeo.getCurrentCaverYCoordinate(), aeo.getCurrentCaverDirection());
                         break;
     
-                        case 'R': move.right(aeo.getCurrDirection()); moveLoop = false;
+                        case 'R': move.right(aeo.getCurrentCaverDirection());
                         break;
     
-                        case 'L': move.left(aeo.getCurrDirection()); moveLoop = false;
+                        case 'L': move.left(aeo.getCurrentCaverDirection());
                         break;
                         
-                        case 'E': moveLoop = false; gameEnd = false;
+                        case 'E': canGameContinue = false;
                         break;
                     }
+                    canCaverMove = false;
                 }else{ System.out.print("\nTry again, invalid move. "); }
             } else {  /*Keep Going*/ }
         }
         
-        if (caverDeath == true)
+        if (hasCaverDied == true)
         {
-            gameEnd = false;
+            canGameContinue = false;
         }
         
-        return gameEnd;
+        return canGameContinue;
     }
     
-    /**
-     * Displays a caver's information ((x,y) coordinates, current facing direction, current path of caver movement so far)
-     * and player menu options:
-     *      M - Forward
-     *      R - Move 90 degrees to the RIGHT
-     *      L - Move 90 degrees to the LEFT
-     *      E - EXIT Game
-     */
-    private void caverGps()
+    private void printUserOptionsMenuAndCaverCurrentLocation()
     {
         System.out.println("\nPlay Options:");
         System.out.format("%1s%33s", "M - Move FORWARD", "Aeo's Path to Freedom:");
-        System.out.format("%n%1s%40s", "R - Turn RIGHT ", aeo.getCurrPath());
-        System.out.format("%n%1s%40s%6s", "L - Turn LEFT", "Aeo's Current Coordinates:", aeo.getCurrCoordinates());
-        System.out.format("%n%1s%38s%2s", "E - EXIT Game", "Aeo's Current Direction:", aeo.getCurrDirection());
+        System.out.format("%n%1s%40s", "R - Turn RIGHT ", aeo.getCurrentPath());
+        System.out.format("%n%1s%40s%6s", "L - Turn LEFT", "Aeo's Current Coordinates:", aeo.getCurrentCaverXYCoordinates());
+        System.out.format("%n%1s%38s%2s", "E - EXIT Game", "Aeo's Current Direction:", aeo.getCurrentCaverDirection());
     }
     
-    /**
-     * This is where the user is asked for the caver's inital coordinates/direction to set the game.
-     * It requests the X, the Y and what direction the caver is facing. North = 'N', etc.
-     * It also does checks for valid data to be inputed.
-     * Once all requested data is set, the caver, named 'Aeo' is created and its initial stats are updated.
-     */
-    public void caverSetup()
+    public void userSetupOfCaversInitialSpawnInCave()
     {
         System.out.println("\t\t\t || ----- The GPS: The Lost Caver ----- ||"); 
         
         System.out.println("\nWhere in the cave is Aeo?");
         
-        boolean xLoop = false; //T=Stop asking for user coordinates or direction. F=User needs to enter valid data
-        boolean yLoop = false; //T=Stop asking for user coordinates or direction. F=User needs to enter valid data
-        boolean dLoop = false; //T=Stop asking for user coordinates or direction. F=User needs to enter valid data
-        Scanner keyboardSetup = new Scanner(System.in);
+        boolean hasXCoordinateSetupFinished = false;
+        boolean hasYCoordinateSetupFinished = false;
+        boolean hasDirectionCoordinateSetupFinished = false;
+        Scanner userKeyboardSetupCaverScanner = new Scanner(System.in);
         
-        while (xLoop!=true)
+        while (hasXCoordinateSetupFinished!=true)
         {
-            //Grab X coordinate of caver
             System.out.print("\nFirst, enter a number between 0-15 ----> ");
-            String xCoor = keyboardSetup.nextLine().trim();
+            String caverXCoordinate = userKeyboardSetupCaverScanner.nextLine().trim();
             
-            if(xCoor.length() > 0) /*User has to enter at least one character.*/
+            if(caverXCoordinate.length() > 0)
             {
                 try
                 {
-                    //If the single index String is a number, will turn it into its proper int.
-                    //Else, will re-ask for proper input in exception.
-                    int xCoorInt = Integer.parseInt(xCoor);
-                    if(xCoorInt > -1 && xCoorInt < 16)
+                    int caverXCoordinateInt = Integer.parseInt(caverXCoordinate);
+                    if(caverXCoordinateInt > -1 && caverXCoordinateInt < 16)
                     {
-                        //Now, grab Y coordinate
-                        while (yLoop!=true) 
+                        
+                        while (hasYCoordinateSetupFinished!=true) 
                         {
                             System.out.print("\nNow, enter a number between 0-19 ----> ");
-                            String yCoor = keyboardSetup.nextLine().trim();
+                            String caverYCoordinate = userKeyboardSetupCaverScanner.nextLine().trim();
                             
-                            if(yCoor.length() > 0) /*User has to enter at least one character.*/
+                            if(caverYCoordinate.length() > 0)
                             {
                                 try
                                 {
-                                    //If the single index String is a number, will turn it into its proper int.
-                                    //Else, will re-ask for proper input in exception.
-                                    int yCoorInt = Integer.parseInt(yCoor);  
-                                    if(yCoorInt > -1 && yCoorInt < 20)
+                                    int caverYCoordinateInt = Integer.parseInt(caverYCoordinate);  
+                                    if(caverYCoordinateInt > -1 && caverYCoordinateInt < 20)
                                     {
-                                        //Now, grab caver direction coordinate
-                                        while (dLoop!=true)
+                                        
+                                        while (hasDirectionCoordinateSetupFinished!=true)
                                         {
                                             System.out.print("\nEnter a direction for Aeo to be facing, Example: N or E or S or W ----> ");
-                                            String aeoDir = keyboardSetup.nextLine().trim();
-                                            aeoDir = aeoDir.toUpperCase();
-                                            String dirOptions = "NESW"; //Only options for valid directions
-                                            if(aeoDir.length() > 0) /*User has to enter at least one character.*/
+                                            String caverDirection = userKeyboardSetupCaverScanner.nextLine().trim();
+                                            caverDirection = caverDirection.toUpperCase();
+                                            
+                                            String validDirectionOptions = "NESW";
+                                            if(caverDirection.length() > 0)
                                             {
-                                                //check to see if choice is valid letter.
-                                                if(dirOptions.indexOf(aeoDir) >= 0)
+                                                if(validDirectionOptions.indexOf(caverDirection) >= 0)
                                                 {
                                                    //Load coordinates and direction into the Caver object
-                                                   aeo = new Caver(xCoorInt, yCoorInt, aeoDir);
-                                                   aeo.setCurrCX(xCoorInt);
-                                                   aeo.setCurrCY(yCoorInt);
-                                                   aeo.setCurrDirection(aeoDir);
+                                                   aeo = new Caver(caverXCoordinateInt, caverYCoordinateInt, caverDirection);
+                                                   aeo.setCurrentCaverXCoordinate(caverXCoordinateInt);
+                                                   aeo.setCurrentCaverYCoordinate(caverYCoordinateInt);
+                                                   aeo.setCurrentCaverDirection(caverDirection);
                                                    
-                                                   xLoop = true;
-                                                   yLoop = true;
-                                                   dLoop = true;
+                                                   hasXCoordinateSetupFinished = true;
+                                                   hasYCoordinateSetupFinished = true;
+                                                   hasDirectionCoordinateSetupFinished = true;
                                                    clearScreen();
                                                 }else{ System.out.print("\nTry again, invalid direction. \n"); }
                                             } else {  /*Keep Going*/ }
@@ -259,9 +207,6 @@ public class CaverController
         }
     }
     
-    /**
-     * Clears the console screen in a blueJ terminal.
-     */
     private void clearScreen()
     {
         System.out.print('\u000C');

@@ -1,7 +1,6 @@
 #BlueJ class context
 comment0.params=
 comment0.target=CaveTest()
-comment0.text=\r\n\ Default\ constructor\ for\ test\ class\ CaveTest\r\n
 comment1.params=
 comment1.target=void\ PrintCave_CaverAtX1Y2N()
 comment1.text=\r\n\ Print\ Grid\ Check\:\ Caver\ is\ at\ X1\ Y2\ facing\ N\ on\ grid\ and\ is\ alive.\ '^'\ symbol\ should\ appear.\r\n
